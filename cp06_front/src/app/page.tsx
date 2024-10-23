@@ -1,23 +1,51 @@
 import Link from 'next/link';
 
+const integrantes = [
+  { id: 1, name: "Adriano Barutti", photo: "/images/adriano.jpg" },
+  { id: 2, name: "Gustavo de Aguiar", photo: "/images/gustavo.jpg" },
+  { id: 3, name: "João Lopes", photo: "/images/joao.jpg" },
+  { id: 4, name: "Julio Cesar", photo: "/images/julio.jpg" },
+  { id: 5, name: "Marcel Kenzo", photo: "/images/marcel.jpg" },
+];
+
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <h1 className="text-4xl font-bold text-center mb-10">Portfólio Acadêmico</h1>
-      <div className="grid grid-cols-3 gap-4">
-      <Link href="/checkpoints" className="p-5 bg-white rounded shadow text-center hover:bg-gray-200">
-        CheckPoints
-      </Link>
+    <div className="container mx-auto p-8">
+      {/* Métodos de Avaliação */}
+      <section className="mb-12">
+        <h1 className="text-3xl font-bold mb-6">Métodos de Avaliação</h1>
+        <div className="space-y-4">
+          <div>
+            <h2 className="text-2xl font-bold">CPS (CheckPoints)</h2>
+            <p>Avaliações intermediárias para acompanhamento do progresso.</p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">GS (GlobalSolution)</h2>
+            <p>Projetos ou avaliações integradoras, que envolvem a aplicação global dos conhecimentos adquiridos.</p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">Challenger Sprints</h2>
+            <p>Avaliações em formato de desafios, com foco em resolução de problemas com entregas programadas.</p>
+          </div>
+        </div>
+      </section>
 
-      <Link href="/globalSolution" className="p-5 bg-white rounded shadow text-center hover:bg-gray-200">
-        Global Solution
-      </Link>
+      {/* Integrantes */}
+      <section>
+        <h1 className="text-3xl font-bold mb-6">Integrantes</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {integrantes.map((integrante) => (
+            <div key={integrante.id} className="p-4 bg-gray-100 rounded shadow">
+              <img src={integrante.photo} alt={integrante.name} className="w-full h-48 object-cover rounded-lg mb-4" />
+              <h2 className="text-xl font-semibold text-center">{integrante.name}</h2>
+              <Link href={`/avaliacoes/${integrante.id}`} className="block mt-4 bg-blue-500 text-white text-center py-2 rounded hover:bg-blue-600">
+                Ver Avaliações
+              </Link>
 
-      <Link href="/challengerSprints" className="p-5 bg-white rounded shadow text-center hover:bg-gray-200">
-        Challenger Sprints
-      </Link>
-
-      </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
