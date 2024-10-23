@@ -2,6 +2,8 @@
 
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import Cabecalho from '@/app/components/Cabecalho/cabecalho';
+import Rodape from '@/app/components/Rodape/rodape';
 
 interface Evaluation {
   type: string;
@@ -62,6 +64,9 @@ export default function AvaliacoesPage() {
   }
 
   return (
+    <>
+      {/* Cabeçalho */}
+      <Cabecalho />
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">Avaliações de {aluno.name}</h1>
 
@@ -80,5 +85,7 @@ export default function AvaliacoesPage() {
         Voltar para Home
       </Link>
     </div>
+    <Rodape />
+    </>
   );
 }
