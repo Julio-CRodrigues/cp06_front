@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const GlobalSolutionPage = () => {
   const projects = [
     { id: 1, title: "Projeto GS 1", description: "Sistema de Gerenciamento", grade: 9.0 },
@@ -13,10 +15,17 @@ const GlobalSolutionPage = () => {
             <h2 className="text-xl font-semibold">{project.title}</h2>
             <p>Descrição: {project.description}</p>
             <p>Nota: {project.grade}</p>
-            <a href={`/globalsolution/${project.id}`} className="text-blue-500 hover:underline">Ver Detalhes</a>
+            <Link href={`/globalSolution/${project.id}`} className="text-blue-500 hover:underline">
+              Ver Detalhes
+            </Link>
           </li>
         ))}
       </ul>
+
+      {/* Botão de retorno para a home */}
+      <Link href="/" className="mt-6 inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+        Voltar para Home
+      </Link>
     </div>
   );
 };

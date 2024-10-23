@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const CheckPointsPage = () => {
   const checkpoints = [
     { id: 1, title: "Checkpoint 1", date: "10/10/2023", grade: 9.5 },
@@ -13,15 +15,17 @@ const CheckPointsPage = () => {
             <h2 className="text-xl font-semibold">{cp.title}</h2>
             <p>Data: {cp.date}</p>
             <p>Nota: {cp.grade}</p>
-            <a href={`/checkpoints/${cp.id}`} className="text-blue-500 hover:underline">Ver Detalhes</a>
+            <Link href={`/checkpoints/${cp.id}`} className="text-blue-500 hover:underline">
+              Ver Detalhes
+            </Link>
           </li>
         ))}
       </ul>
 
       {/* Botão de retorno para a home */}
-      <link href="/" className="mt-6 inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+      <Link href="/" className="mt-6 inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
         Voltar para Home
-      </link>
+      </Link>
     </div>
   );
 };

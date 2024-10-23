@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const ChallengerSprintsPage = () => {
   const sprints = [
     { id: 1, title: "Sprint 1", task: "Desafio de API", grade: 7.8 },
@@ -13,10 +15,17 @@ const ChallengerSprintsPage = () => {
             <h2 className="text-xl font-semibold">{sprint.title}</h2>
             <p>Tarefa: {sprint.task}</p>
             <p>Nota: {sprint.grade}</p>
-            <a href={`/challengersprints/${sprint.id}`} className="text-blue-500 hover:underline">Ver Detalhes</a>
+            <Link href={`/challengerSprints/${sprint.id}`} className="text-blue-500 hover:underline">
+              Ver Detalhes
+            </Link>
           </li>
         ))}
       </ul>
+
+      {/* Botão de retorno para a home */}
+      <Link href="/" className="mt-6 inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+        Voltar para Home
+      </Link>
     </div>
   );
 };
