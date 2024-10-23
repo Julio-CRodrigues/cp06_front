@@ -1,11 +1,12 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const integrantes = [
-  { id: 1, name: "Adriano Barutti", photo: "/images/adriano.jpg" },
-  { id: 2, name: "Gustavo de Aguiar", photo: "/images/gustavo.jpg" },
-  { id: 3, name: "João Lopes", photo: "/images/joao.jpg" },
-  { id: 4, name: "Julio Cesar", photo: "/images/julio.jpg" },
-  { id: 5, name: "Marcel Kenzo", photo: "/images/marcel.jpg" },
+  { id: 1, name: "Adriano Barutti", photo: "/img/adriano.jpg" },
+  { id: 2, name: "Gustavo de Aguiar", photo: "/img/gustavo.png" },
+  { id: 3, name: "João Lopes", photo: "/img/joao.jpg" },
+  { id: 4, name: "Julio Cesar", photo: "/img/julio.jpg" },
+  { id: 5, name: "Marcel Kenzo", photo: "/img/marcel.jpg" },
 ];
 
 export default function HomePage() {
@@ -36,12 +37,19 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {integrantes.map((integrante) => (
             <div key={integrante.id} className="p-4 bg-gray-100 rounded shadow">
-              <img src={integrante.photo} alt={integrante.name} className="w-full h-48 object-cover rounded-lg mb-4" />
+              <Image
+                src={integrante.photo}
+                alt={integrante.name}
+                width={200}  // Defina a largura que deseja para as imagens
+                height={200}  // Defina a altura
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
               <h2 className="text-xl font-semibold text-center">{integrante.name}</h2>
-              <Link href={`/avaliacoes/${integrante.id}`} className="block mt-4 bg-blue-500 text-white text-center py-2 rounded hover:bg-blue-600">
-                Ver Avaliações
+              <Link href={`/avaliacoes/${integrante.id}`} legacyBehavior>
+                <a className="block mt-4 bg-blue-500 text-white text-center py-2 rounded hover:bg-blue-600">
+                  Ver Avaliações
+                </a>
               </Link>
-
             </div>
           ))}
         </div>
