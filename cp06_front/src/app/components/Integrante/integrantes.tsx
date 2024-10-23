@@ -29,16 +29,16 @@ export default function Integrantes() {
     <div>
       {integrantes.map((integrante, index) => (
         <div key={index} className="text-center">
-          {/* Usando o componente Image para otimizar o carregamento */}
+          
           <Image
             src={integrante.imagem}
             alt={integrante.nome}
-            width={160}  // Define a largura da imagem
-            height={160} // Define a altura da imagem
+            width={160} 
+            height={160} 
             className="rounded-full mx-auto mb-4"
           />
           <h2 className="text-xl font-semibold">{integrante.nome}</h2>
-          <Link href={`/integrantes/${index + 1}`} className="text-blue-500 hover:underline">
+          <Link href={`/integrantes/${index + 1}`} className="text-white hover:underline">
             Ver Avaliações
           </Link>
         </div>

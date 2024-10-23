@@ -68,7 +68,7 @@ export default function AvaliacoesPage() {
       {/* Cabeçalho */}
       <Cabecalho />
     <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Avaliações de {aluno.name}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-white">Avaliações de {aluno.name}</h1>
 
       <div className="space-y-4">
         {aluno.evaluations.map((evaluation: Evaluation, index: number) => (
@@ -81,7 +81,7 @@ export default function AvaliacoesPage() {
       </div>
 
       {/* Botão para voltar à página principal */}
-      <Link href="/" className="block mt-6 bg-blue-500 text-white text-center py-2 rounded hover:bg-blue-600">
+      <Link href="/" className="block mt-6 bg-pink-700 text-white text-center py-2 rounded hover:bg-pink-500">
         Voltar para Home
       </Link>
     </div>
