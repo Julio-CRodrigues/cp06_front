@@ -2,11 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const integrantes = [
-  { id: 1, name: "Adriano Barutti", photo: "/img/adriano.jpg" },
+  { id: 1, name: "Adriano Barutti", photo: "/img/adriano.jpeg" },
   { id: 2, name: "Gustavo de Aguiar", photo: "/img/gustavo.png" },
-  { id: 3, name: "João Lopes", photo: "/img/joao.jpg" },
+  { id: 3, name: "João Lopes", photo: "/img/joao.jpeg" },
   { id: 4, name: "Julio Cesar", photo: "/img/julio.jpg" },
-  { id: 5, name: "Marcel Kenzo", photo: "/img/marcel.jpg" },
+  { id: 5, name: "Marcel Kenzo", photo: "/img/marcel.jpeg" },
 ];
 
 export default function HomePage() {
