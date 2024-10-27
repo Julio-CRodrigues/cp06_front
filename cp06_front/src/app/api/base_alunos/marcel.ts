@@ -6,12 +6,12 @@ import { TipoAvaliacao } from "../../../../types/types"; // Certifique-se de que
 // Criar um objeto DATABASE passando o arquivo de configuração da plataforma.
 const database = new Databases(client);
 
-// Função para buscar todas as avaliações do aluno Adriano
-export async function getAllAvaliacoesAdriano() {
+// Função para buscar todas as avaliações do aluno Marcel
+export async function getAllAvaliacoesMarcel() {
     try {
         const response = await database.listDocuments(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ADRIANO_ID as string, // Usando a coleção específica do Adriano
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_MARCEL_ID as string, // Usando a coleção específica do Marcel
             [Query.orderAsc("$createdAt")]
         );
         
@@ -22,22 +22,22 @@ export async function getAllAvaliacoesAdriano() {
     }    
 }
 
-// Manipulador de requisição GET para obter as avaliações do Adriano
+// Manipulador de requisição GET para obter as avaliações do Marcel
 export async function GET() {
     try {
-        const avaliacoes = await getAllAvaliacoesAdriano();
+        const avaliacoes = await getAllAvaliacoesMarcel();
         return NextResponse.json(avaliacoes);
     } catch (error) {
         return NextResponse.json({ error: "Falha na obtenção das informações. " + error }, { status: 500 });
     }
 }
 
-// Função para criar uma nova avaliação para o aluno Adriano
+// Função para criar uma nova avaliação para o aluno Marcel
 export async function createAvaliacao(avaliacao: TipoAvaliacao) {
     try {
         const response = await database.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ADRIANO_ID as string, // Usando a coleção específica do Adriano
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_MARCEL_ID as string, // Usando a coleção específica do Marcel
             ID.unique(),
             avaliacao
         );
@@ -49,7 +49,7 @@ export async function createAvaliacao(avaliacao: TipoAvaliacao) {
     }
 }
 
-// Manipulador de requisição POST para adicionar uma nova avaliação para o aluno Adriano
+// Manipulador de requisição POST para adicionar uma nova avaliação para o aluno Marcel
 export async function POST(request: Request) {
     try {
         const { nome, nota, feedback, link } = await request.json(); // Esperando os dados da avaliação
