@@ -6,9 +6,10 @@ import Cabecalho from '@/app/components/Cabecalho/cabecalho';
 import Rodape from '@/app/components/Rodape/rodape';
 
 interface Evaluation {
-  type: string;
-  description: string;
-  grade: number;
+  type: string;       // Nome da avaliação
+  description: string; // Feedback
+  grade: number;      // Nota
+  link: string;       // Link relacionado à avaliação
 }
 
 const avaliacoes: Record<string, { name: string; evaluations: Evaluation[] }> = {
@@ -48,15 +49,42 @@ export default function AvaliacoesPage() {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     
+    const grade = Number(formData.get('grade'));
+
+    // Validação da nota para garantir que esteja entre 0 e 100
+    if (isNaN(grade) || grade < 0 || grade > 100) {
+      alert("A nota deve ser um número entre 0 e 100.");
+      return;
+    }
+
     const novaAvaliacao: Evaluation = {
       type: formData.get('type') as string,
-      description: formData.get('description') as string,
-      grade: Number(formData.get('grade')),
+      description: formData.get('feedback') as string, // Feedback
+      grade: grade,
+      link: formData.get('link') as string, // Link
     };
 
-    // Adiciona a nova avaliação ao aluno específico
-    aluno.evaluations.push(novaAvaliacao);
-    form.reset(); // Limpa o formulário após o envio
+    // Chamada à API para adicionar a nova avaliação
+    try {
+      const response = await fetch(`/api/avaliacoes/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(novaAvaliacao),
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao adicionar avaliação');
+      }
+
+      // Adiciona a nova avaliação ao aluno específico
+      aluno.evaluations.push(novaAvaliacao);
+      form.reset(); // Limpa o formulário após o envio
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao adicionar avaliação. Tente novamente.");
+    }
   };
 
   return (
@@ -67,9 +95,10 @@ export default function AvaliacoesPage() {
         <h1 className="text-3xl font-bold mb-6 text-white">Avaliações de {aluno.name}</h1>
 
         <form onSubmit={handleSubmit} className="mb-6 space-y-4">
-          <input type="text" name="type" placeholder="Tipo de Avaliação" className="p-2 border rounded" required />
-          <input type="text" name="description" placeholder="Descrição" className="p-2 border rounded" required />
-          <input type="number" name="grade" placeholder="Nota" className="p-2 border rounded" required />
+          <input type="text" name="type" placeholder="Nome da Avaliação" className="p-2 border rounded" required />
+          <input type="text" name="feedback" placeholder="Feedback" className="p-2 border rounded" required />
+          <input type="number" name="grade" placeholder="Nota (0-100)" className="p-2 border rounded" required />
+          <input type="text" name="link" placeholder="Link" className="p-2 border rounded" />
           <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">Adicionar Avaliação</button>
         </form>
 
@@ -77,8 +106,13 @@ export default function AvaliacoesPage() {
           {aluno.evaluations.map((evaluation: Evaluation, index: number) => (
             <div key={index} className="p-4 bg-gray-100 rounded shadow">
               <h2 className="text-2xl font-bold">{evaluation.type}</h2>
-              <p>{evaluation.description}</p>
+              <p><strong>Feedback:</strong> {evaluation.description}</p>
               <p><strong>Nota:</strong> {evaluation.grade}</p>
+              {evaluation.link && (
+                <p>
+                  <strong>Link:</strong> <a href={evaluation.link} target="_blank" rel="noopener noreferrer" className="text-blue-600">{evaluation.link}</a>
+                </p>
+              )}
             </div>
           ))}
         </div>

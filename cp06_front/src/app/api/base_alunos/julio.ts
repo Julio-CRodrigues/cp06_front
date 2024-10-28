@@ -53,6 +53,12 @@ export async function createAvaliacao(avaliacao: TipoAvaliacao) {
 export async function POST(request: Request) {
     try {
         const { nome, nota, feedback, link } = await request.json(); // Esperando os dados da avaliação
+
+        // Validação da nota entre 0 e 100
+        if (nota < 0 || nota > 100) {
+            return NextResponse.json({ error: "A nota deve estar entre 0 e 100." }, { status: 400 });
+        }
+
         const avaliacao = { nome, nota, feedback, link } as TipoAvaliacao; // Cria o objeto da avaliação
         const response = await createAvaliacao(avaliacao);
 
