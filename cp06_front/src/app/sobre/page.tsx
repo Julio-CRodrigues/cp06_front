@@ -6,7 +6,7 @@ export default function Sobre() {
     return (
       <> 
       <Cabecalho />
-      <div className="container mx-auto p-8">
+      <div className="container mx-auto p-8 text-white">
         <h1 className="text-3xl font-bold mb-6">Sobre o Projeto</h1>
         <p>
           Este projeto foi desenvolvido para demonstrar as habilidades de front-end
