@@ -1,17 +1,15 @@
 import { Databases, ID, Query } from "appwrite";
-import client from "../../../../lib/appwrite_alunos"; // Certifique-se de que o caminho está correto
+import client from "../../../../lib/appwrite_alunos";
 import { NextResponse } from "next/server";
-import { TipoAvaliacao } from "../../../../types/types"; // Certifique-se de que este caminho está correto
+import { TipoAvaliacao } from "../../../../types/types";
 
-// Criar um objeto DATABASE passando o arquivo de configuração da plataforma.
 const database = new Databases(client);
 
-// Função para buscar todas as avaliações do aluno João
 export async function getAllAvaliacoesJoao() {
     try {
         const response = await database.listDocuments(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JOAO_ID as string, // Usando a coleção específica do João
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JOAO_ID as string,
             [Query.orderAsc("$createdAt")]
         );
         
@@ -22,7 +20,6 @@ export async function getAllAvaliacoesJoao() {
     }    
 }
 
-// Manipulador de requisição GET para obter as avaliações do João
 export async function GET() {
     try {
         const avaliacoes = await getAllAvaliacoesJoao();
@@ -32,12 +29,11 @@ export async function GET() {
     }
 }
 
-// Função para criar uma nova avaliação para o aluno João
 export async function createAvaliacao(avaliacao: TipoAvaliacao) {
     try {
         const response = await database.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JOAO_ID as string, // Usando a coleção específica do João
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JOAO_ID as string,
             ID.unique(),
             avaliacao
         );
@@ -49,11 +45,10 @@ export async function createAvaliacao(avaliacao: TipoAvaliacao) {
     }
 }
 
-// Manipulador de requisição POST para adicionar uma nova avaliação para o aluno João
 export async function POST(request: Request) {
     try {
-        const { nome, nota, feedback, link } = await request.json(); // Esperando os dados da avaliação
-        const avaliacao = { nome, nota, feedback, link } as TipoAvaliacao; // Cria o objeto da avaliação
+        const { nome, nota, feedback, link } = await request.json();
+        const avaliacao = { nome, nota, feedback, link } as TipoAvaliacao;
         const response = await createAvaliacao(avaliacao);
 
         return NextResponse.json(response, { status: 201 });

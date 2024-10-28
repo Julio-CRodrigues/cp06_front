@@ -6,10 +6,10 @@ import Cabecalho from '@/app/components/Cabecalho/cabecalho';
 import Rodape from '@/app/components/Rodape/rodape';
 
 interface Evaluation {
-  type: string;       // Nome da avaliação
-  description: string; // Feedback
-  grade: number;      // Nota
-  link: string;       // Link relacionado à avaliação
+  type: string; 
+  description: string;
+  grade: number;      
+  link: string;      
 }
 
 const avaliacoes: Record<string, { name: string; evaluations: Evaluation[] }> = {
@@ -51,7 +51,6 @@ export default function AvaliacoesPage() {
     
     const grade = Number(formData.get('grade'));
 
-    // Validação da nota para garantir que esteja entre 0 e 100
     if (isNaN(grade) || grade < 0 || grade > 100) {
       alert("A nota deve ser um número entre 0 e 100.");
       return;
@@ -59,12 +58,11 @@ export default function AvaliacoesPage() {
 
     const novaAvaliacao: Evaluation = {
       type: formData.get('type') as string,
-      description: formData.get('feedback') as string, // Feedback
+      description: formData.get('feedback') as string,
       grade: grade,
-      link: formData.get('link') as string, // Link
+      link: formData.get('link') as string,
     };
 
-    // Chamada à API para adicionar a nova avaliação
     try {
       const response = await fetch(`/api/avaliacoes/${id}`, {
         method: 'POST',
@@ -78,9 +76,8 @@ export default function AvaliacoesPage() {
         throw new Error('Falha ao adicionar avaliação');
       }
 
-      // Adiciona a nova avaliação ao aluno específico
       aluno.evaluations.push(novaAvaliacao);
-      form.reset(); // Limpa o formulário após o envio
+      form.reset();
     } catch (error) {
       console.error(error);
       alert("Erro ao adicionar avaliação. Tente novamente.");
@@ -89,7 +86,6 @@ export default function AvaliacoesPage() {
 
   return (
     <>
-      {/* Cabeçalho */}
       <Cabecalho />
       <div className="container mx-auto p-8">
         <h1 className="text-3xl font-bold mb-6 text-white">Avaliações de {aluno.name}</h1>
@@ -117,7 +113,6 @@ export default function AvaliacoesPage() {
           ))}
         </div>
 
-        {/* Botão para voltar à página principal */}
         <Link href="/" className="block mt-6 bg-pink-700 text-white text-center py-2 rounded hover:bg-pink-500">
           Voltar para Home
         </Link>

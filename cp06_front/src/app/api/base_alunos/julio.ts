@@ -1,17 +1,15 @@
 import { Databases, ID, Query } from "appwrite";
-import client from "../../../../lib/appwrite_alunos"; // Certifique-se de que o caminho está correto
+import client from "../../../../lib/appwrite_alunos";
 import { NextResponse } from "next/server";
-import { TipoAvaliacao } from "../../../../types/types"; // Certifique-se de que este caminho está correto
+import { TipoAvaliacao } from "../../../../types/types";
 
-// Criar um objeto DATABASE passando o arquivo de configuração da plataforma.
 const database = new Databases(client);
 
-// Função para buscar todas as avaliações do aluno Júlio
 export async function getAllAvaliacoesJulio() {
     try {
         const response = await database.listDocuments(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JULIO_ID as string, // Usando a coleção específica do Júlio
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JULIO_ID as string,
             [Query.orderAsc("$createdAt")]
         );
         
@@ -22,7 +20,6 @@ export async function getAllAvaliacoesJulio() {
     }    
 }
 
-// Manipulador de requisição GET para obter as avaliações do Júlio
 export async function GET() {
     try {
         const avaliacoes = await getAllAvaliacoesJulio();
@@ -32,12 +29,11 @@ export async function GET() {
     }
 }
 
-// Função para criar uma nova avaliação para o aluno Júlio
 export async function createAvaliacao(avaliacao: TipoAvaliacao) {
     try {
         const response = await database.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JULIO_ID as string, // Usando a coleção específica do Júlio
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_JULIO_ID as string,
             ID.unique(),
             avaliacao
         );
@@ -49,17 +45,15 @@ export async function createAvaliacao(avaliacao: TipoAvaliacao) {
     }
 }
 
-// Manipulador de requisição POST para adicionar uma nova avaliação para o aluno Júlio
 export async function POST(request: Request) {
     try {
-        const { nome, nota, feedback, link } = await request.json(); // Esperando os dados da avaliação
+        const { nome, nota, feedback, link } = await request.json();
 
-        // Validação da nota entre 0 e 100
         if (nota < 0 || nota > 100) {
             return NextResponse.json({ error: "A nota deve estar entre 0 e 100." }, { status: 400 });
         }
 
-        const avaliacao = { nome, nota, feedback, link } as TipoAvaliacao; // Cria o objeto da avaliação
+        const avaliacao = { nome, nota, feedback, link } as TipoAvaliacao;
         const response = await createAvaliacao(avaliacao);
 
         return NextResponse.json(response, { status: 201 });
