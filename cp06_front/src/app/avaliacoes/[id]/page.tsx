@@ -7,9 +7,9 @@ import Rodape from '@/app/components/Rodape/rodape';
 
 interface Evaluation {
   type: string; 
-  description: string;
+  description?: string; // Tornar description opcional
   grade: number;      
-  link: string;      
+  link?: string; // Tornar link opcional
 }
 
 const avaliacoes: Record<string, { name: string; evaluations: Evaluation[] }> = {
@@ -58,9 +58,9 @@ export default function AvaliacoesPage() {
 
     const novaAvaliacao: Evaluation = {
       type: formData.get('type') as string,
-      description: formData.get('feedback') as string,
+      description: formData.get('feedback') as string || undefined, // Usar undefined se o feedback não for fornecido
       grade: grade,
-      link: formData.get('link') as string,
+      link: formData.get('link') as string || undefined, // Usar undefined se o link não for fornecido
     };
 
     try {
@@ -92,7 +92,7 @@ export default function AvaliacoesPage() {
 
         <form onSubmit={handleSubmit} className="mb-6 space-y-4">
           <input type="text" name="type" placeholder="Nome da Avaliação" className="p-2 border rounded" required />
-          <input type="text" name="feedback" placeholder="Feedback" className="p-2 border rounded" required />
+          <input type="text" name="feedback" placeholder="Feedback" className="p-2 border rounded" /> {/* Removido o required */}
           <input type="number" name="grade" placeholder="Nota (0-100)" className="p-2 border rounded" required />
           <input type="text" name="link" placeholder="Link" className="p-2 border rounded" />
           <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">Adicionar Avaliação</button>
@@ -102,7 +102,7 @@ export default function AvaliacoesPage() {
           {aluno.evaluations.map((evaluation: Evaluation, index: number) => (
             <div key={index} className="p-4 bg-gray-100 rounded shadow">
               <h2 className="text-2xl font-bold">{evaluation.type}</h2>
-              <p><strong>Feedback:</strong> {evaluation.description}</p>
+              <p><strong>Feedback:</strong> {evaluation.description || "Nenhum feedback fornecido"}</p> {/* Mensagem caso não haja feedback */}
               <p><strong>Nota:</strong> {evaluation.grade}</p>
               {evaluation.link && (
                 <p>
